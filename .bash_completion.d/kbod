@@ -1,0 +1,20 @@
+BOD_INFO='/home/robert/bbglib_32/data/bod_info.txt'
+
+function _app_pkgs() {
+    awk '{print $1}' "$BOD_INFO" | tr '\n' ' '
+}
+
+function _kbod() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    str=$(_app_pkgs)
+    COMPREPLY=( $(compgen -W "$str" -- $cur) )
+}
+complete -F _kbod kbod
+
+function _wgetbod() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    str=$(_app_pkgs)
+    COMPREPLY=( $(compgen -W "$str" -- $cur) )
+}
+complete -F _wgetbod wgetbod
+

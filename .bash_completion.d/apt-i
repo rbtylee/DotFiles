@@ -1,0 +1,7 @@
+function _apt-i() {
+    ((COMP_CWORD+=1))
+    COMP_WORDS=( apt-get install ${COMP_WORDS[@]:1} )
+    _apt_get
+    return 0
+}
+complete -F _apt-i apt-i

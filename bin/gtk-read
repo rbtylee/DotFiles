@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+#  
+# .gtk-bookmarks.py  version 0.1
+#      10.16.2012 16:58:57
+#
+#  (c) Rbt Y-lee <ylee@bodhilinux.com> 2012
+#      Do What The Fuck You Want To Public License, v2
+
+import os
+import sys
+
+GTK=os.path.expanduser("~/.gtk-bookmarks")
+
+try:
+    with open(GTK) as f:
+        content = f.readlines()
+except IOError:
+    print "IOError: .gtk-bookmarks does not exist"
+    sys.exit(1)
+bk_nameslst=[]
+bk_dirlst=[]
+for bk in content:
+    bk_temp=bk.split()
+    bk_dir = bk_temp[0]
+    bk_nameslst.append( bk[len(bk_dir)+1:].rstrip() .replace(" ", "_"))
+    bk_dirlst.append( bk_dir[7:] )
+
+print bk_nameslst
+print bk_dirlst
+# All Wrongs Reserved.

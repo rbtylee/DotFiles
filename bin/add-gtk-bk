@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+# add-gtk-bk  version 0.1
+#      10.17.2012
+#
+#
+#  (c) Rbt Y-lee <ylee@bodhilinux.com> 2012
+#      Do What The Fuck You Want To Public License, v2
+
+import os
+import sys
+
+GTK=os.path.expanduser("~/.gtk-bookmarks")
+bk_dir=os.path.abspath(os.getcwd())
+
+# Get name from arguments if it exists
+# otherwise get name from location
+if (len(sys.argv) > 1):
+    bk_name = sys.argv[1]
+else:
+    bk_name=os.path.split(bk_dir)[-1]
+    bk_name=bk_name.replace(" ", "_")
+
+bk_dir=bk_dir.replace(" ", "%20")
+
+# Should probably check to see if Name or directory used already
+try:
+    with open(GTK) as f:
+        content = f.readlines()
+except IOError:
+    print "IOError: .gtk-bookmarks does not exist"
+    sys.exit(1)
+
+bk_nameslst=[]
+bk_dirlst=[]
+
+for bk in content:
+    bk_temp=bk.split()
+    bk_loc = bk_temp[0]
+    bk_nameslst.append( bk[len(bk_loc)+1:].rstrip() .replace(" ", "_"))
+    bk_dirlst.append( bk_loc[7:] )
+
+if bk_name in bk_nameslst or bk_dir in bk_dirlst:
+    print "Bookmark already exist"
+    sys.exit(1)
+
+# If all is cool append to file
+try:
+    with open(GTK, "a") as f:
+       f.write("file://%s %s\n" %(bk_dir, bk_name))
+except IOError:
+    print "IOError: .gtk-bookmarks does not exist"
+    sys.exit(1)
